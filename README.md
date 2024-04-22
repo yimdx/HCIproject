@@ -10,3 +10,4 @@ We seperate the whole phase into two part: server and client.
 
 **For server part:**
 
+First, we should create a connection to client and recieve audio data.
