@@ -1,31 +1,32 @@
 import pyaudio
 
-# Constants
-FORMAT = pyaudio.paInt16
-CHANNELS = 1    
-RATE = 44100  
-CHUNK = 1024  
-THRESHOLD = 500          
-RECORD_SECONDS = 10      
 
-p = pyaudio.PyAudio()
-stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
+def catch_audio():
+    # Constants
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 44100
+    CHUNK = 1024
+    # THRESHOLD = 500
+    RECORD_SECONDS = 10
 
-frames = []
+    p = pyaudio.PyAudio()
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    input=True,
+                    frames_per_buffer=CHUNK)
 
-for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-    data = stream.read(CHUNK)
-    frames.append(data)
+    frames = []
 
-stream.stop_stream()
-stream.close()
-p.terminate()
+    for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK)
+        frames.append(data)
 
-with open('output.wav', 'wb') as f:
-    for frame in frames:
-        f.write(frame)
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
 
+    with open('output.wav', 'wb') as f:
+        for frame in frames:
+            f.write(frame)
